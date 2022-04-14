@@ -62,10 +62,6 @@ main {
     border-right: 0;
 }
 
-/* .cell:hover {
-    transform: scale(0.9);
-} */
-
 .controls > button {
     font-size: 1.5rem;
     padding: 8px 15px;
@@ -136,15 +132,18 @@ main {
     align-items: center;
 
     opacity: 0;
-    /* display: none; */
+    display: none;
 
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .announcement-container.show {
-    /* display: flex; */
+    display: flex;
     opacity: 1;
+    animation: fadeInFromNone 0.5s ease-out;
 }
+
+
 
 .announcement-container.show .announce-winner {
     padding: 40px;
@@ -155,19 +154,19 @@ main {
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* .announce-winner {
-    background-color: rgba(0,0,0,0.7);
-    width: 100%;
-    color: var(--text-color);
-    text-align: center;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+@-webkit-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
 
-.announcement-container.transition {
-    opacity: 1;
-}
+    1% {
+        display: flex;
+        opacity: 0;
+    }
 
-.announce-winner.transition{
-    padding: 40px;
-    opacity: 1;
-} */
+    100% {
+        display: flex;
+        opacity: 1;
+    }
+}
