@@ -152,6 +152,7 @@ const displayController = (()=>{
                 nextPlayer();
             }
 
+            // checks each round for instance of tie
             if(gameBoard.getBoard().every(item =>	item == 'x' || item == 'o')) {
                 announcementContainer.classList.add('show');
                 winner.textContent = "IT'S A TIE!";

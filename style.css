@@ -155,7 +155,7 @@ main {
     gap: 25px;
 }
 
-@-webkit-keyframes fadeInFromNone {
+@keyframes fadeInFromNone {
     0% {
         display: none;
         opacity: 0;
