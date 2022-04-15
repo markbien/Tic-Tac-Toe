@@ -22,8 +22,6 @@ main {
     align-items: center;
 
     height: 500px;
-
-    gap: 50px;
 }
 
 .cell-container {
@@ -137,7 +135,7 @@ main {
 .announcement-container.show {
     display: flex;
     opacity: 1;
-    animation: fadeInFromNone 0.5s ease-out;
+    animation: fadeInFromNone 0.3s ease-out;
 }
 
 
@@ -149,6 +147,11 @@ main {
     color: var(--text-color);
     text-align: center;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
 }
 
 @-webkit-keyframes fadeInFromNone {
