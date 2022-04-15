@@ -57,6 +57,8 @@ const gameBoard = (()=>{
             cell.classList.remove('o');
         });
         $('.announcement-container').classList.remove('show');
+        $('.cell-container').classList.remove('o');
+        $('.cell-container').classList.add('x');
     };
 
     $('.controls > button').addEventListener('click', resetGame);
