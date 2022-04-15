@@ -11,11 +11,8 @@
     --cell-size: 100px;
 }
 
-body {
-    
-}
-
 main {
+    margin-top: 5%;
     background-color: var(--main-theme);
     color: var(--text-color);
 
