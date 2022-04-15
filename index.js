@@ -16,7 +16,7 @@ const gameBoard = (()=>{
     const cellContainer = $('.cell-container');
 
     // creates the board array to hold values
-    let _board = new Array(9);
+    let _board = ['','','','','','','','',''];
 
     // reference for winning values
     const _winningCombinations = [
@@ -38,9 +38,6 @@ const gameBoard = (()=>{
         // ensures that chosen field is not filled yet
         if(input){
             _board[num] = input;
-            // const cellToFill = $(`.cell[data-index="${num}"]`);
-            // cellToFill.classList.add(input);
-            // cellToFill.dataset.value = input;            
         }
     }
 
@@ -54,8 +51,7 @@ const gameBoard = (()=>{
     // resets the game
     const resetGame = ()=> {
         // sets the value of the _board back to 0
-        _board = [];
-        _board = new Array(9);
+        _board = ['','','','','','','','',''];
         // removes x and o classes for all cells
         cells.forEach(cell => {
             if(cell.classList.contains('x')) {
@@ -64,9 +60,6 @@ const gameBoard = (()=>{
             if(cell.classList.contains('o')) {
                 cell.classList.remove('o');
             }
-            // if(cell.dataset.value) {
-            //     delete cell.dataset.value;
-            // }
         });
         // hides the announcement window
         $('.announcement-container').classList.remove('show');
@@ -97,6 +90,8 @@ const displayController = (()=>{
     const player2 = Player('o');
 
     const cellContainer = $('.cell-container');
+    const announcementContainer = $('.announcement-container');
+    const winner = $('.announce-winner > h1');
 
     // checks if the player1 is the active player
     let activePlayer = true;
@@ -141,7 +136,7 @@ const displayController = (()=>{
     // responsible for adding event listeners to the cells
     $$('.cell').forEach(cell=> {
         cell.addEventListener('click', ()=> {
-            // adds the mark to the cell
+            // adds the mark to the cell IF IT DOESN'T have existing mark
             if(!cell.classList.contains(currentClass)){
                 markCell(cell);
 
@@ -149,12 +144,17 @@ const displayController = (()=>{
                 gameBoard.setField(cell.dataset.index, currentClass);
                 if(checkWin(currentClass, $$('.cell'))) {
                     // shows the announcement board
-                    $('.announcement-container').classList.add('show');
+                    announcementContainer.classList.add('show');
                     // shows who the winner is
-                    $('.announce-winner > h1 > span').textContent = currentClass.toUpperCase();
+                    winner.textContent = `PLAYER ${currentClass.toUpperCase()} WINS THE ROUND!`;
                 }
 
                 nextPlayer();
+            }
+
+            if(gameBoard.getBoard().every(item =>	item == 'x' || item == 'o')) {
+                announcementContainer.classList.add('show');
+                winner.textContent = "IT'S A TIE!";
             }
         });
     });
