@@ -7,7 +7,6 @@ const gameBoard = (()=> {
         '_','_','_',
     ];
 
-    // const showBoard = ()=> board;
     const showBoard = () => {
         console.log(`[${board[0]}|${board[1]}|${board[2]}]`);
         console.log(`[${board[3]}|${board[4]}|${board[5]}]`);
@@ -65,7 +64,7 @@ const gameBoard = (()=> {
         return winner;
     }
 
-    return { board, showBoard, setMarker, checkWinner };
+    return { showBoard, setMarker, checkWinner };
 })();
 
 const winningCombinations = (()=> {
@@ -85,24 +84,34 @@ const winningCombinations = (()=> {
     return {showWinningCombinations};
 })();
 
-gameBoard.setMarker("o", 0);
+const gameHandler = (()=> {
+    function init(){
+        console.log("hello");
+    }
+
+    return { init };
+})();
+
+// gameBoard.setMarker("o", 0);
+// // gameBoard.showBoard();
+
+// gameBoard.setMarker("o", 1);
+// // gameBoard.showBoard();
+
+// gameBoard.setMarker("o", 2);
+// // gameBoard.showBoard();
+
+// gameBoard.setMarker("x", 2);
+// // gameBoard.showBoard();
+
+// gameBoard.setMarker("x", 3);
+// // gameBoard.showBoard();
+
+// gameBoard.setMarker("x", 6);
 // gameBoard.showBoard();
 
-gameBoard.setMarker("o", 1);
-// gameBoard.showBoard();
+// console.log(gameBoard.checkWinner("o"));
 
-gameBoard.setMarker("o", 2);
-// gameBoard.showBoard();
+// // console.log(gameBoard.isBoardFull());
 
-gameBoard.setMarker("x", 2);
-// gameBoard.showBoard();
-
-gameBoard.setMarker("x", 3);
-// gameBoard.showBoard();
-
-gameBoard.setMarker("x", 6);
-gameBoard.showBoard();
-
-console.log(gameBoard.checkWinner("o"));
-
-// console.log(gameBoard.isBoardFull());
+gameHandler.init();
