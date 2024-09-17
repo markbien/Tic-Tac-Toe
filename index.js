@@ -4,16 +4,17 @@ const gameBoard = (() => {
   const board = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   const showBoard = () => {
-    console.log(`[${board[0]}|${board[1]}|${board[2]}]`);
-    console.log(`[${board[3]}|${board[4]}|${board[5]}]`);
-    console.log(`[${board[6]}|${board[7]}|${board[8]}]\n`);
+    // console.log(`[${board[0]}|${board[1]}|${board[2]}]`);
+    // console.log(`[${board[3]}|${board[4]}|${board[5]}]`);
+    // console.log(`[${board[6]}|${board[7]}|${board[8]}]\n`);
+    const str = `[${board[0]}|${board[1]}|${board[2]}]\n[${board[3]}|${board[4]}|${board[5]}]\n[${board[6]}|${board[7]}|${board[8]}]\n`
+    return str;
   };
 
   function setMarker(marker, place) {
     place -= 1; // Since array starts from 0
     board[place] = `${marker}`;
-
-    return checkWinner(marker) ? true : false;
+    // return checkWinner(marker) ? true : false;
   }
 
   function checkIfAMarkAlreadyExists(place) {
@@ -44,7 +45,7 @@ const gameBoard = (() => {
     return isThereAWinner ? true : false;
   }
 
-  return { showBoard, setMarker, checkIfAMarkAlreadyExists };
+  return { showBoard, setMarker, checkIfAMarkAlreadyExists, checkWinner };
 })();
 
 const winningCombinations = (() => {
@@ -66,26 +67,49 @@ const winningCombinations = (() => {
 
 const gameHandler = (() => {
   function init() {
-    gameBoard.showBoard();
+    const playerX = createPlayer("Mark", "x");
+    const playerY = createPlayer("Jacque", "o");
 
-    gameBoard.setMarker("x", 1);
+    alert(gameBoard.showBoard());
 
-    gameBoard.showBoard();
+    while (true) {
+      if (isWinnerInThisTurn(playerX) === true) break;
+      if (isWinnerInThisTurn(playerY) === true) break;
+    }
+
+    alert(gameBoard.showBoard());
+  }
+
+  function isWinnerInThisTurn(player){
+    const playerInput = askForInput(player.getMarker());
+    gameBoard.setMarker(player.getMarker(), playerInput);
+    alert(gameBoard.showBoard());
+    if (gameBoard.checkWinner(player.getMarker()) === true) {
+      alert(`Congratulations Player: ${player.getName()}, you won the game!`);
+      return true;
+    }
+    return false;
   }
 
   function askForInput(marker) {
-    const index = prompt(`Player ${marker}, enter a digit to place marker: `);
-    return index;
+    while (true) {
+      const index = prompt(`Player ${marker}, enter a digit to place marker: `);
+      if (gameBoard.checkIfAMarkAlreadyExists(index) === true) {
+        alert("Digit already has a marker! Select another digit.");
+        continue;
+      }
+      return index;
+    }
   }
 
   return { init };
 })();
 
-// function createPlayer(name, marker){
-//     const getName = ()=> name;
-//     const getMarker = ()=> marker;
+function createPlayer(name, marker) {
+  const getName = () => name;
+  const getMarker = () => marker;
 
-//     return { getName, getMarker };
-// }
+  return { getName, getMarker };
+}
 
 gameHandler.init();
