@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.box {
+  font-family: 'Roboto', Helvetica, sans-serif;
+  font-size: 3rem;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.turn {
+  font-size: 1.1rem;
+  text-align: center;
+  background-color: greenyellow;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(3, 50px);
+  border: 2px solid black;
+}
+
+.cells span{
+  cursor: pointer;
+}
+
+span {
+  transition: all .15s ease;
+}
+
+span:hover {
+  transform: scale(1.1);
+}

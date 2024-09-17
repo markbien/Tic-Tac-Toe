@@ -4,9 +4,6 @@ const gameBoard = (() => {
   const board = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   const showBoard = () => {
-    // console.log(`[${board[0]}|${board[1]}|${board[2]}]`);
-    // console.log(`[${board[3]}|${board[4]}|${board[5]}]`);
-    // console.log(`[${board[6]}|${board[7]}|${board[8]}]\n`);
     const str = `[${board[0]}|${board[1]}|${board[2]}]\n[${board[3]}|${board[4]}|${board[5]}]\n[${board[6]}|${board[7]}|${board[8]}]\n`
     return str;
   };
@@ -14,7 +11,6 @@ const gameBoard = (() => {
   function setMarker(marker, place) {
     place -= 1; // Since array starts from 0
     board[place] = `${marker}`;
-    // return checkWinner(marker) ? true : false;
   }
 
   function checkIfAMarkAlreadyExists(place) {
@@ -23,13 +19,13 @@ const gameBoard = (() => {
     else false;
   }
 
-  // function isBoardFull(){
-  //     for (let i = 0, len = board.length; i < len; i++) {
-  //         if (board[i] === "x" || board[i] === "o") continue;
-  //         else return false;
-  //     }
-  //     return true;
-  // }
+  function isBoardFull(){
+      for (let i = 0, len = board.length; i < len; i++) {
+          if (board[i] === "x" || board[i] === "o") continue;
+          else return false;
+      }
+      return true;
+  }
 
   function checkWinner(marker) {
     const combinations = winningCombinations.showWinningCombinations();
@@ -45,7 +41,7 @@ const gameBoard = (() => {
     return isThereAWinner ? true : false;
   }
 
-  return { showBoard, setMarker, checkIfAMarkAlreadyExists, checkWinner };
+  return { showBoard, setMarker, checkIfAMarkAlreadyExists, checkWinner, isBoardFull };
 })();
 
 const winningCombinations = (() => {
@@ -73,6 +69,11 @@ const gameHandler = (() => {
     alert(gameBoard.showBoard());
 
     while (true) {
+      // if (gameBoard.isBoardFull() === true) {
+      //   alert("Board is full, game is a tie!");
+      //   break;
+      // }
+
       if (isWinnerInThisTurn(playerX) === true) break;
       if (isWinnerInThisTurn(playerY) === true) break;
     }
@@ -112,4 +113,4 @@ function createPlayer(name, marker) {
   return { getName, getMarker };
 }
 
-gameHandler.init();
+// gameHandler.init();
