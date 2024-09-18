@@ -30,6 +30,12 @@ body {
   font-size: 1.1rem;
   text-align: center;
   background-color: greenyellow;
+  padding: 5px 0;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
 }
 
 .cells {
@@ -39,8 +45,13 @@ body {
   border: 2px solid black;
 }
 
-.cells span{
+.cells > .box{
   cursor: pointer;
+}
+
+.text-box > img {
+  height: 32px;
+  width: auto;
 }
 
 span {

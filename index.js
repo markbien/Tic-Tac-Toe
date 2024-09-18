@@ -114,3 +114,7 @@ function createPlayer(name, marker) {
 }
 
 // gameHandler.init();
+
+const domHandler = (()=> {
+  
+})();
