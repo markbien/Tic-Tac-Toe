@@ -131,11 +131,21 @@ const domHandler = (() => {
   }
 
   function changeNameNameBasedOnTurnInDom(name, marker){
+    const turnDiv = document.querySelector('.turn');
     const playerName = document.querySelector('.player-name');
     const playerMarker = document.querySelector('.marker');
     playerName.textContent = name;
     playerMarker.textContent = marker;
+
+    if (marker === 'x') {
+      turnDiv.style.backgroundColor = "greenyellow";
+    }
+    else if(marker === "o") {
+      turnDiv.style.backgroundColor = "yellow";
+    }
   }
 
   return { changeFromNumberToMarker, changeNameNameBasedOnTurnInDom };
 })();
+
+domHandler.changeNameNameBasedOnTurnInDom("Jacque", "o");
