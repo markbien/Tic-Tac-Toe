@@ -1,6 +1,5 @@
 "use strict";
 
-let turnIsDone = false;
 const gameBoard = (() => {
   const board = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
@@ -84,7 +83,6 @@ const gameHandler = (() => {
   function swapTurns() {
     isPlayerOnesTurn = !isPlayerOnesTurn;
     swapMarker();
-    console.log(isPlayerOnesTurn, currentMarker);
   }
 
   function showCurrentTurn() {
@@ -124,8 +122,15 @@ const gameHandler = (() => {
     cells.forEach((cell) => {
       cell.addEventListener("click", (e) => {
         const dataCellNumber = cell.getAttribute("data-cell");
+        if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
+          alert("You can't add another marker to this cell! Please select another cell.");
+          return;
+        }
         // console.log(e.target);
         // console.log(dataCellNumber)
+
+        gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
+
         domHandler.changeFromNumberToMarker(
           showCurrentMarker(),
           dataCellNumber
