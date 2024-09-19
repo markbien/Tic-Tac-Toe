@@ -123,6 +123,7 @@ function createPlayer(name, marker) {
 
 const domHandler = (() => {
   function changeFromNumberToMarker(marker, index) {
+    index -= 1;
     const cells = document.querySelectorAll(".text-box");
     const markerImage = document.createElement("img");
     markerImage.src = `img/${marker}.png`;
@@ -148,4 +149,4 @@ const domHandler = (() => {
   return { changeFromNumberToMarker, changeNameNameBasedOnTurnInDom };
 })();
 
-domHandler.changeNameNameBasedOnTurnInDom("Jacque", "o");
+domHandler.changeFromNumberToMarker("x", 1);
