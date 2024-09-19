@@ -16,6 +16,7 @@ body {
   flex-direction: column;
   gap: 15px;
   font-family: 'Roboto', Tahoma, sans-serif;
+  color: rgba(0, 0, 0, 0.378);
 }
 
 .box {
