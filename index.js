@@ -122,5 +122,16 @@ function createPlayer(name, marker) {
 // gameHandler.init();
 
 const domHandler = (() => {
-  
+  const cells = document.querySelectorAll('.text-box');
+
+  function changeFromNumberToMarker(marker, index) {
+    const markerImage = document.createElement("img");
+    markerImage.src = `img/${marker}.png`;
+    cells[index].innerHTML = "";
+    cells[index].appendChild(markerImage);
+  }
+
+  return { changeFromNumberToMarker }
 })();
+
+domHandler.changeFromNumberToMarker("x", 8);
