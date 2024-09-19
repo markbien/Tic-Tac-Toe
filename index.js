@@ -122,16 +122,20 @@ function createPlayer(name, marker) {
 // gameHandler.init();
 
 const domHandler = (() => {
-  const cells = document.querySelectorAll('.text-box');
-
   function changeFromNumberToMarker(marker, index) {
+    const cells = document.querySelectorAll(".text-box");
     const markerImage = document.createElement("img");
     markerImage.src = `img/${marker}.png`;
     cells[index].innerHTML = "";
     cells[index].appendChild(markerImage);
   }
 
-  return { changeFromNumberToMarker }
-})();
+  function changeNameNameBasedOnTurnInDom(name, marker){
+    const playerName = document.querySelector('.player-name');
+    const playerMarker = document.querySelector('.marker');
+    playerName.textContent = name;
+    playerMarker.textContent = marker;
+  }
 
-domHandler.changeFromNumberToMarker("x", 8);
+  return { changeFromNumberToMarker, changeNameNameBasedOnTurnInDom };
+})();
