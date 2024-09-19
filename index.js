@@ -1,5 +1,6 @@
 "use strict";
 
+let turnIsDone = false;
 const gameBoard = (() => {
   const board = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
@@ -68,35 +69,89 @@ const winningCombinations = (() => {
 })();
 
 const gameHandler = (() => {
+  let isPlayerOnesTurn = true;
+  let currentMarker = "x";
+  const players = [];
+
+  function addPlayerToArray(player) {
+    players.push(player);
+  }
+
+  function showPlayers(){
+    return players;
+  }
+
+  function swapTurns() {
+    isPlayerOnesTurn = !isPlayerOnesTurn;
+    swapMarker();
+    console.log(isPlayerOnesTurn, currentMarker);
+  }
+
+  function showCurrentTurn() {
+    return isPlayerOnesTurn;
+  }
+
+  function swapMarker() {
+    if (showCurrentTurn()) {
+      currentMarker = "x";
+    } else {
+      currentMarker = "o";
+    }
+  }
+
+  function showCurrentMarker() {
+    return currentMarker;
+  }
+
   function init() {
+    // const playerX = createPlayer(prompt("Enter name for Player 1"), "x");
+    // const playerY = createPlayer(prompt("Enter name for Player 2"), "o");
     const playerX = createPlayer("Mark", "x");
-    const playerY = createPlayer("Jacque", "o");
+    const playerY = createPlayer("Jac", "o");
 
-    alert(gameBoard.showBoard());
+    addPlayerToArray(playerX);
+    addPlayerToArray(playerY);
 
-    while (true) {
-      // if (gameBoard.isBoardFull() === true) {
-      //   alert("Board is full, game is a tie!");
-      //   break;
-      // }
-
-      if (isWinnerInThisTurn(playerX) === true) break;
-      if (isWinnerInThisTurn(playerY) === true) break;
-    }
-
-    alert(gameBoard.showBoard());
+    addEventListenerToCells();
+    domHandler.changeNameNameBasedOnTurnInDom(
+      playerX.getName(),
+      playerX.getMarker()
+    );
   }
 
-  function isWinnerInThisTurn(player) {
-    const playerInput = askForInput(player.getMarker());
-    gameBoard.setMarker(player.getMarker(), playerInput);
-    alert(gameBoard.showBoard());
-    if (gameBoard.checkWinner(player.getMarker()) === true) {
-      alert(`Congratulations Player: ${player.getName()}, you won the game!`);
-      return true;
-    }
-    return false;
+  function addEventListenerToCells() {
+    const cells = document.querySelectorAll(".box");
+    cells.forEach((cell) => {
+      cell.addEventListener("click", (e) => {
+        const dataCellNumber = cell.getAttribute("data-cell");
+        // console.log(e.target);
+        // console.log(dataCellNumber)
+        domHandler.changeFromNumberToMarker(
+          showCurrentMarker(),
+          dataCellNumber
+        );
+        swapTurns();
+        const name = showCurrentTurn() ? showPlayers()[0].getName() : showPlayers()[1].getName();
+        domHandler.changeNameNameBasedOnTurnInDom(
+          name,
+          showCurrentMarker()
+        );
+      });
+    });
   }
+
+  function isWinnerInThisTurn(player) {}
+
+  // function isWinnerInThisTurn(player) {
+  //   const playerInput = askForInput(player.getMarker());
+  //   gameBoard.setMarker(player.getMarker(), playerInput);
+  //   alert(gameBoard.showBoard());
+  //   if (gameBoard.checkWinner(player.getMarker()) === true) {
+  //     alert(`Congratulations Player: ${player.getName()}, you won the game!`);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   function askForInput(marker) {
     while (true) {
@@ -109,7 +164,7 @@ const gameHandler = (() => {
     }
   }
 
-  return { init };
+  return { init, addEventListenerToCells };
 })();
 
 function createPlayer(name, marker) {
@@ -118,8 +173,6 @@ function createPlayer(name, marker) {
 
   return { getName, getMarker };
 }
-
-// gameHandler.init();
 
 const domHandler = (() => {
   function changeFromNumberToMarker(marker, index) {
@@ -131,17 +184,16 @@ const domHandler = (() => {
     cells[index].appendChild(markerImage);
   }
 
-  function changeNameNameBasedOnTurnInDom(name, marker){
-    const turnDiv = document.querySelector('.turn');
-    const playerName = document.querySelector('.player-name');
-    const playerMarker = document.querySelector('.marker');
+  function changeNameNameBasedOnTurnInDom(name, marker) {
+    const turnDiv = document.querySelector(".turn");
+    const playerName = document.querySelector(".player-name");
+    const playerMarker = document.querySelector(".marker");
     playerName.textContent = name;
     playerMarker.textContent = marker;
 
-    if (marker === 'x') {
+    if (marker === "x") {
       turnDiv.style.backgroundColor = "greenyellow";
-    }
-    else if(marker === "o") {
+    } else if (marker === "o") {
       turnDiv.style.backgroundColor = "yellow";
     }
   }
@@ -149,4 +201,4 @@ const domHandler = (() => {
   return { changeFromNumberToMarker, changeNameNameBasedOnTurnInDom };
 })();
 
-domHandler.changeFromNumberToMarker("x", 1);
+gameHandler.init();
