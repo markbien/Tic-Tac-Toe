@@ -15,13 +15,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  font-family: 'Roboto', Tahoma, sans-serif;
 }
 
 .box {
-  font-family: 'Roboto', Helvetica, sans-serif;
-  font-size: 3rem;
+  font-size: 2.5rem;
   border: 2px solid black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
