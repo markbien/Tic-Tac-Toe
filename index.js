@@ -3,11 +3,6 @@
 const gameBoard = (() => {
   const board = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-  const showBoard = () => {
-    const str = `[${board[0]}|${board[1]}|${board[2]}]\n[${board[3]}|${board[4]}|${board[5]}]\n[${board[6]}|${board[7]}|${board[8]}]\n`;
-    return str;
-  };
-
   function setMarker(marker, place) {
     place -= 1; // Since array starts from 0
     board[place] = `${marker}`;
@@ -42,7 +37,6 @@ const gameBoard = (() => {
   }
 
   return {
-    showBoard,
     setMarker,
     checkIfAMarkAlreadyExists,
     checkWinner,
@@ -141,8 +135,17 @@ const gameHandler = (() => {
 
     const currentPlayerName = getNameOfCurrentPlayer();
     if (gameBoard.checkWinner(showCurrentMarker())) {
-      alert(`Player: ${currentPlayerName} has won the game! Click OK to restart the game.`);
-      location.reload();
+      domHandler.changeNameNameBasedOnTurnInDom(
+        currentPlayerName,
+        showCurrentMarker()
+      );
+
+      // Adding timeout so that alert will not occur before the board in UI updates
+      setTimeout(function(){
+        alert(`Player: ${currentPlayerName} has won the game! Click OK to restart the game.`);
+        location.reload(); // Refresh the page
+      }, 50);
+      
     }
 
     swapTurns();
