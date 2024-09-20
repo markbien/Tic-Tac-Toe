@@ -147,6 +147,13 @@ const gameHandler = (() => {
           }, 50);
         }
 
+        if (gameBoard.isBoardFull()) {
+          setTimeout(function () {
+            alert(`The game is tie! Press OK to restart the game.`);
+            location.reload(); // Refresh the page
+          }, 50);
+        }
+
         swapTurns();
         const nextPlayerName = getNameOfCurrentPlayer();
         domHandler.changeNameNameBasedOnTurnInDom(
