@@ -76,7 +76,7 @@ const gameHandler = (() => {
     players.push(player);
   }
 
-  function showPlayers(){
+  function showPlayers() {
     return players;
   }
 
@@ -116,60 +116,49 @@ const gameHandler = (() => {
       playerX.getMarker()
     );
   }
-
-  function addEventListenerToCells() {
-    const cells = document.querySelectorAll(".box");
+  
+  const cells = document.querySelectorAll(".box");
+  function addEventListenerToCells() {    
     cells.forEach((cell) => {
-      cell.addEventListener("click", (e) => {
-        const dataCellNumber = cell.getAttribute("data-cell");
-        if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
-          alert("You can't add another marker to this cell! Please select another cell.");
-          return;
-        }
-        // console.log(e.target);
-        // console.log(dataCellNumber)
-
-        gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
-
-        domHandler.changeFromNumberToMarker(
-          showCurrentMarker(),
-          dataCellNumber
-        );
-        swapTurns();
-        const name = showCurrentTurn() ? showPlayers()[0].getName() : showPlayers()[1].getName();
-        domHandler.changeNameNameBasedOnTurnInDom(
-          name,
-          showCurrentMarker()
-        );
+      cell.addEventListener("click", function(){
+        addMarkerAndSetToBoard(cell)
       });
     });
   }
 
-  function isWinnerInThisTurn(player) {}
-
-  // function isWinnerInThisTurn(player) {
-  //   const playerInput = askForInput(player.getMarker());
-  //   gameBoard.setMarker(player.getMarker(), playerInput);
-  //   alert(gameBoard.showBoard());
-  //   if (gameBoard.checkWinner(player.getMarker()) === true) {
-  //     alert(`Congratulations Player: ${player.getName()}, you won the game!`);
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  function askForInput(marker) {
-    while (true) {
-      const index = prompt(`Player ${marker}, enter a digit to place marker: `);
-      if (gameBoard.checkIfAMarkAlreadyExists(index) === true) {
-        alert("Digit already has a marker! Select another digit.");
-        continue;
-      }
-      return index;
+  function addMarkerAndSetToBoard(cell) {
+    const dataCellNumber = cell.getAttribute("data-cell");
+    if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
+      alert(
+        "You can't add another marker to this cell! Please select another cell."
+      );
+      return;
     }
+
+    gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
+
+    domHandler.changeFromNumberToMarker(showCurrentMarker(), dataCellNumber);
+
+    const currentPlayerName = getNameOfCurrentPlayer();
+    if (gameBoard.checkWinner(showCurrentMarker())) {
+      alert(`Player: ${currentPlayerName} has won the game! Click OK to restart the game.`);
+      location.reload();
+    }
+
+    swapTurns();
+    const nextPlayerName = getNameOfCurrentPlayer();
+    domHandler.changeNameNameBasedOnTurnInDom(
+      nextPlayerName,
+      showCurrentMarker()
+    );
   }
 
-  return { init, addEventListenerToCells };
+  function getNameOfCurrentPlayer() {
+    return showCurrentTurn()
+      ? showPlayers()[0].getName()
+      : showPlayers()[1].getName();
+  }
+  return { init };
 })();
 
 function createPlayer(name, marker) {
