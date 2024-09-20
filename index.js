@@ -110,50 +110,51 @@ const gameHandler = (() => {
       playerX.getMarker()
     );
   }
-  
+
   const cells = document.querySelectorAll(".box");
-  function addEventListenerToCells() {    
+
+  function addEventListenerToCells() {
     cells.forEach((cell) => {
-      cell.addEventListener("click", function(){
-        addMarkerAndSetToBoard(cell)
+      cell.addEventListener("click", function () {
+        const dataCellNumber = cell.getAttribute("data-cell");
+        if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
+          alert(
+            "You can't add another marker to this cell! Please select another cell."
+          );
+          return;
+        }
+
+        gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
+
+        domHandler.changeFromNumberToMarker(
+          showCurrentMarker(),
+          dataCellNumber
+        );
+
+        const currentPlayerName = getNameOfCurrentPlayer();
+        if (gameBoard.checkWinner(showCurrentMarker())) {
+          domHandler.changeNameNameBasedOnTurnInDom(
+            currentPlayerName,
+            showCurrentMarker()
+          );
+
+          // Adding timeout so that alert will not occur before the board in UI updates
+          setTimeout(function () {
+            alert(
+              `Player: ${currentPlayerName} has won the game! Click OK to restart the game.`
+            );
+            location.reload(); // Refresh the page
+          }, 50);
+        }
+
+        swapTurns();
+        const nextPlayerName = getNameOfCurrentPlayer();
+        domHandler.changeNameNameBasedOnTurnInDom(
+          nextPlayerName,
+          showCurrentMarker()
+        );
       });
     });
-  }
-
-  function addMarkerAndSetToBoard(cell) {
-    const dataCellNumber = cell.getAttribute("data-cell");
-    if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
-      alert(
-        "You can't add another marker to this cell! Please select another cell."
-      );
-      return;
-    }
-
-    gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
-
-    domHandler.changeFromNumberToMarker(showCurrentMarker(), dataCellNumber);
-
-    const currentPlayerName = getNameOfCurrentPlayer();
-    if (gameBoard.checkWinner(showCurrentMarker())) {
-      domHandler.changeNameNameBasedOnTurnInDom(
-        currentPlayerName,
-        showCurrentMarker()
-      );
-
-      // Adding timeout so that alert will not occur before the board in UI updates
-      setTimeout(function(){
-        alert(`Player: ${currentPlayerName} has won the game! Click OK to restart the game.`);
-        location.reload(); // Refresh the page
-      }, 50);
-      
-    }
-
-    swapTurns();
-    const nextPlayerName = getNameOfCurrentPlayer();
-    domHandler.changeNameNameBasedOnTurnInDom(
-      nextPlayerName,
-      showCurrentMarker()
-    );
   }
 
   function getNameOfCurrentPlayer() {
