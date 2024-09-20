@@ -8,12 +8,6 @@ const gameBoard = (() => {
     board[place] = `${marker}`;
   }
 
-  function checkIfAMarkAlreadyExists(place) {
-    place -= 1;
-    if (board[place] === "x" || board[place] === "o") return true;
-    else false;
-  }
-
   function isBoardFull() {
     for (let i = 0, len = board.length; i < len; i++) {
       if (board[i] === "x" || board[i] === "o") continue;
@@ -38,7 +32,6 @@ const gameBoard = (() => {
 
   return {
     setMarker,
-    checkIfAMarkAlreadyExists,
     checkWinner,
     isBoardFull,
   };
@@ -117,12 +110,6 @@ const gameHandler = (() => {
     cells.forEach((cell) => {
       cell.addEventListener("click", function () {
         const dataCellNumber = cell.getAttribute("data-cell");
-        if (gameBoard.checkIfAMarkAlreadyExists(dataCellNumber)) {
-          alert(
-            "You can't add another marker to this cell! Please select another cell."
-          );
-          return;
-        }
 
         gameBoard.setMarker(showCurrentMarker(), dataCellNumber);
 
@@ -160,6 +147,8 @@ const gameHandler = (() => {
           nextPlayerName,
           showCurrentMarker()
         );
+      }, {
+        once: true,
       });
     });
   }
