@@ -89,10 +89,8 @@ const gameHandler = (() => {
   }
 
   function init() {
-    const playerX = createPlayer(prompt("Enter name for Player 1"), "x");
-    const playerY = createPlayer(prompt("Enter name for Player 2"), "o");
-    // const playerX = createPlayer("Mark", "x");
-    // const playerY = createPlayer("Jac", "o");
+    const playerX = createPlayer(addDefaultNameIfBlank(), "x");
+    const playerY = createPlayer(addDefaultNameIfBlank(), "o");
 
     addPlayerToArray(playerX);
     addPlayerToArray(playerY);
@@ -102,6 +100,14 @@ const gameHandler = (() => {
       playerX.getName(),
       playerX.getMarker()
     );
+  }
+
+  function addDefaultNameIfBlank(){
+    let playerName = prompt("Enter name for Player 1", "Guest");
+    if (playerName === null || playerName === "") {
+      playerName = "Guest";
+    }
+    return playerName;
   }
 
   const cells = document.querySelectorAll(".box");
@@ -134,7 +140,7 @@ const gameHandler = (() => {
           }, 50);
         }
 
-        if (gameBoard.isBoardFull()) {
+        if (gameBoard.isBoardFull() && gameBoard.checkWinner(showCurrentMarker()) === false) {
           setTimeout(function () {
             alert(`The game is tie! Press OK to restart the game.`);
             location.reload(); // Refresh the page
