@@ -89,6 +89,9 @@ const gameHandler = (() => {
   }
 
   function init() {
+    setTimeout(()=>{
+      // Set 200ms timeout to allow html to load for a bit
+    },200)
     const playerX = createPlayer(addDefaultNameIfBlank(), "x");
     const playerY = createPlayer(addDefaultNameIfBlank(), "o");
 
@@ -201,4 +204,6 @@ const domHandler = (() => {
   return { changeFromNumberToMarker, changeNameNameBasedOnTurnInDom };
 })();
 
-gameHandler.init();
+document.addEventListener("DOMContentLoaded", function(event) { 
+  gameHandler.init();
+});
