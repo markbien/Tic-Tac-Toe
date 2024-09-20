@@ -89,10 +89,10 @@ const gameHandler = (() => {
   }
 
   function init() {
-    // const playerX = createPlayer(prompt("Enter name for Player 1"), "x");
-    // const playerY = createPlayer(prompt("Enter name for Player 2"), "o");
-    const playerX = createPlayer("Mark", "x");
-    const playerY = createPlayer("Jac", "o");
+    const playerX = createPlayer(prompt("Enter name for Player 1"), "x");
+    const playerY = createPlayer(prompt("Enter name for Player 2"), "o");
+    // const playerX = createPlayer("Mark", "x");
+    // const playerY = createPlayer("Jac", "o");
 
     addPlayerToArray(playerX);
     addPlayerToArray(playerY);
